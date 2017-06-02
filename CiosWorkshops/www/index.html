@@ -5,7 +5,7 @@
         Customize the content security policy in the meta tag below as needed. Add 'unsafe-inline' to default-src to enable inline JavaScript.
         For details, see http://go.microsoft.com/fwlink/?LinkID=617521
     -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *">
         
         <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         <meta name="format-detection" content="telephone=no">
@@ -29,11 +29,11 @@
                     <button class="menu-icon" type="button" data-toggle="top-menu-dropdown"></button>
                     <div class="dropdown-pane" id="top-menu-dropdown" data-dropdown>
                         <ul class="vertical menu">
-                            <li><a class="small button" href="#">Overzicht</a></li>
-                            <li><a class="small button" href="#">Planning</a></li>
-                            <li><a class="small button" href="#">Contact</a></li>
-                            <li><a class="small alert button" href="#">Uitloggen</a></li>
-                            <li><a class="small secondary button" href="#">Beheer</a></li>
+                            <li><a class="small button" href="#" onclick="loadPage('Home')" data-close>Overzicht</a></li>
+                            <li><a class="small button" href="#" data-close>Planning</a></li>
+                            <li><a class="small button" href="#" data-close>Contact</a></li>
+                            <li><a class="small alert button" href="#" data-close>Uitloggen</a></li>
+                            <li><a class="small secondary button" href="#" data-close>Beheer</a></li>
                         </ul>
                     </div>
                     <!-- Search optie
@@ -46,52 +46,8 @@
             </div>
         </div>
         <!-- Einde top-balk -->
-
-        <!-- Ingeschreven workshops-->
-        <h4 class="text-center">Ingeschreven workshops</h4>
-        <table>
-            <thead>
-                <tr>
-                    <th>Workshop</th>
-                    <th>Locatie</th>
-                    <th>Tijd</th>
-                    <th>Spots</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><a href="html/Workshoppage.html">Woordenschat</a></td>
-                    <td>W1.05</td>
-                    <td>14:00</td>
-                    <td>9/10</td>
-                </tr>
-            </tbody>
-        </table>
-        <!-- Einde ingeschreven-->
-        <hr />
-        <!-- beschikbare ws-->
-        <h4 class="text-center">Beschikbare workshops</h4>
-        <table>
-            <thead>
-                <tr>
-                    <th>Workshop</th>
-                    <th>Locatie</th>
-                    <th>Tijd</th>
-                    <th>Spots</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Rekenen</td>
-                    <td>W1.05</td>
-                    <td>15:00</td>
-                    <td>2/15</td>
-                </tr>
-            </tbody>
-        </table>
-        <!-- einde beschikbare ws's-->
-
-
+        <div id="dataDiv"></div>
+        
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="scripts/platformOverrides.js"></script>
         <script type="text/javascript" src="scripts/js/app.js"></script>
@@ -99,5 +55,6 @@
         <script type="text/javascript" src="scripts/js/vendor/what-input.js"></script>
         <script type="text/javascript" src="scripts/js/vendor/foundation.js"></script>
         <script type="text/javascript" src="scripts/index.js"></script>
+        <script type="text/javascript" src="scripts/loadPage.js"></script>
     </body>
 </html>

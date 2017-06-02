@@ -9,7 +9,7 @@
 
     function onDeviceReady() {
         // Handle the Cordova pause and resume events
-        $(document).foundation();
+        loadPage("Home");
         document.addEventListener( 'pause', onPause.bind( this ), false );
         document.addEventListener( 'resume', onResume.bind( this ), false );
         
@@ -28,4 +28,4 @@
     function onResume() {
         // TODO: This application has been reactivated. Restore application state here.
     };
-} )();
+})();
