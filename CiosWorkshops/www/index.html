@@ -17,36 +17,52 @@
         <title>CiosWorkshops</title>
     </head>
     <body>
-        
-        <div class="title-bar">
-            <div class="title-bar-left">
-                <div class="float-left">
-                    <h3 class="menu-text" id="top-title">Overzicht</h3>
+        <div id="siteContainer">
+            <div class="top-bar-container" data-sticky-container>
+                <div class="sticky sticky-topbar" data-sticky data-options="anchor: siteContainer; marginTop: 0; stickyOn: small;">
+                    <div class="title-bar">
+                        <div class="title-bar-left">
+                            <div class="float-left">
+                                <h3 class="menu-text" id="top-title">Overzicht</h3>
+                            </div>
+                        </div>
+                        <div class="title-bar-right">
+                            <div class="float-right menu-text">
+                                <button class="menu-icon" type="button" data-toggle="top-menu-dropdown"></button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="title-bar-right">
-                <div class="float-right menu-text">
-                    <button class="menu-icon" type="button" data-toggle="top-menu-dropdown"></button>
-                    <div class="dropdown-pane" id="top-menu-dropdown" data-dropdown>
-                        <ul class="vertical menu">
-                            <li><a class="small button" href="#" onclick="loadPage('Home')" data-close>Overzicht</a></li>
-                            <li><a class="small button" href="#" data-close>Planning</a></li>
-                            <li><a class="small button" href="#" data-close>Contact</a></li>
-                            <li><a class="small alert button" href="#" data-close>Uitloggen</a></li>
-                            <li><a class="small secondary button" href="#" data-close>Beheer</a></li>
-                        </ul>
-                    </div>
-                    <!-- Search optie
-                    <ul class="menu">
-                        <li><input type="search" placeholder="Zoeken" /></li>
-                        <li><button type="button" class="button">Zoeken</button></li>
+            <div id="pageContent">
+                <div class="dropdown-pane" id="top-menu-dropdown" data-dropdown>
+                    <ul class="vertical menu">
+                        <li><a class="small button" href="#" onclick="loadPage('Home')" data-close>Overzicht</a></li>
+                        <li><a class="small button" href="#" onclick="loadPage('Planning')" data-close>Planning</a></li>
+                        <li><a class="small button" href="#" onclick="loadPage('Contact')" data-close>Contact</a></li>
+                        <li><a class="small alert button" href="#" onclick="" data-close>Uitloggen</a></li>
+                        <li><a class="small secondary button" href="#" onclick="loadPage('Beheer')" data-close>Beheer</a></li>
                     </ul>
-                    -->
                 </div>
+                <!-- Einde top-balk -->
+                <!-- Main content div-->
+                <div id="dataDiv"></div>
+                <!--                 -->
+                <!-- Footer -->
+                <div id="footer">
+                    <div class="rounded-social-buttons">
+                        <a class="social-button facebook" href="#"></a>
+                        <a class="social-button twitter" href="#"></a>
+                        <a class="social-button youtube" href="#"></a>
+                        <a class="social-button instagram" href="#"></a>
+                        <a class="social-button pinterest" href="#"></a>
+                        <a class="social-button tumblr" href="#"></a>
+                    </div>
+                </div>
+                <!--        -->
             </div>
         </div>
-        <!-- Einde top-balk -->
-        <div id="dataDiv"></div>
+        
         
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="scripts/platformOverrides.js"></script>
@@ -56,5 +72,6 @@
         <script type="text/javascript" src="scripts/js/vendor/foundation.js"></script>
         <script type="text/javascript" src="scripts/index.js"></script>
         <script type="text/javascript" src="scripts/loadPage.js"></script>
+        <script>$(document).foundation();</script>
     </body>
 </html>
