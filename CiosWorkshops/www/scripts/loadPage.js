@@ -27,7 +27,7 @@ function loadPage(page) {
 function readEvents() {
     var eventsMade = [];
     var eventsState = [];
-    firebase.database().ref('/evenementen/').on('value').then(function (snapshot) {
+    firebase.database().ref('/evenementen/').once('value').then(function (snapshot) {
         var contentTable = "<table><tbody>"; //Start of table string
         var eventObj = snapshot.val();
 
