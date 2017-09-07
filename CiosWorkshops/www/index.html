@@ -19,7 +19,20 @@
         <title>CiosWorkshops</title>
     </head>
     <body>
-        <div id="siteContainer">
+        <!-- off-screen data/menu -->
+        <div class="off-canvas position-left" id="top-menu-dropdown" data-off-canvas>
+            <ul class="vertical menu">
+                <li><a class="small button" href="#" onclick="loadPage('Home')" data-close>Overzicht</a></li>
+                <li><a class="small button" href="#" onclick="loadPage('Planning')" data-close>Planning</a></li>
+                <li><a class="small button" href="#" onclick="loadPage('Contact')" data-close>Contact</a></li>
+                <li><a class="small alert button" href="#" onclick="" data-close>Uitloggen</a></li>
+                <li><a class="small secondary button" href="#" onclick="loadPage('Beheer')" data-close>Beheer</a></li>
+            </ul>
+        </div>
+        <!-- End off-screen-->
+
+        <div id="siteContainer" class="off-canvas-content" data-off-canvas-content>
+            <!-- Begin top-balk -->
             <div class="top-bar-container" data-sticky-container>
                 <div class="sticky sticky-topbar" data-sticky data-options="anchor: siteContainer; marginTop: 0; stickyOn: small;">
                     <div class="title-bar">
@@ -36,17 +49,9 @@
                     </div>
                 </div>
             </div>
+            <!-- Einde top-balk -->
+
             <div id="pageContent">
-                <div class="dropdown-pane" id="top-menu-dropdown" data-dropdown>
-                    <ul class="vertical menu">
-                        <li><a class="small button" href="#" onclick="loadPage('Home')" data-close>Overzicht</a></li>
-                        <li><a class="small button" href="#" onclick="loadPage('Planning')" data-close>Planning</a></li>
-                        <li><a class="small button" href="#" onclick="loadPage('Contact')" data-close>Contact</a></li>
-                        <li><a class="small alert button" href="#" onclick="" data-close>Uitloggen</a></li>
-                        <li><a class="small secondary button" href="#" onclick="loadPage('Beheer')" data-close>Beheer</a></li>
-                    </ul>
-                </div>
-                <!-- Einde top-balk -->
                 <!-- Main content div-->
                 <div id="dataDiv"></div>
                 <!--                 -->
