@@ -23,50 +23,65 @@ function loadPage(page) {
     })
 }*/
 
-// Loads every event in database in the admin event menu, plus update function to activate/de-activate event active status
+// Loads every event in database in the admin event menu, plus control buttons
 function readEvents() {
     var eventsRef = firebase.database().ref('/evenementen/');
+    
+    //Children functions
+    // On Added
+    eventsRef.on('child_added', function (snapshot) {
+        var eventChild = snapshot.val(); //database data
+        var tr = document.createElement("tr");
+        var td1 = document.createElement("td");
+        var td2 = document.createElement("td");
+        var td3 = document.createElement("td");
+        var hh = document.createElement("h4");
 
-    eventsRef.on('value', function (snapshot) {
-        var eventsMade = [];
-        var eventsState = [];
-        var contentTable = "<table><tbody>"; //Start of table string
-        var eventObj = snapshot.val();
+        hh.textContent = eventChild.event;
+        td1.id = eventChild.event + "tdhh";
+        td2.id = eventChild.event + "td";
+        tr.id = eventChild.event + "tr";
 
-        for (var eventsName in eventObj) { //Adds each event to table string
-            contentTable += "<tr><td><h3>" + eventsName + "</h3></td><td id='" + eventsName + "Id'></td ></tr > "; //Table code
-            eventsMade.push(eventsName); //To keep track of how many events + their names
+        document.getElementById("eventsTable").appendChild(tr);
+        document.getElementById(eventChild.event + "tr").appendChild(td1);
+        document.getElementById(eventChild.event + "tdhh").appendChild(hh);
+        document.getElementById(eventChild.event + "tr").appendChild(td2);
 
-            if (eventObj[eventsName].active == true) { //Check if event is active or not, pushes value into array for later use (aka the switches)
-                eventsState.push(true);
-            } else if (eventObj[eventsName].active == false) {
-                eventsState.push(false);
-            } else {
-                console.log("Cant find active!");
-            }
+        var div = document.createElement("div");
+        var input = document.createElement("input");
+        var label = document.createElement("label");
+
+        div.setAttribute("class", "switch small");
+        div.setAttribute("id", eventChild.event + "div");
+        input.setAttribute("class", "switch-input");
+        input.setAttribute("id", eventChild.event + "Switch");
+        input.setAttribute("type", "checkbox");
+        label.setAttribute("class", "switch-paddle");
+        label.setAttribute("for", eventChild.event + "Switch");
+
+        if (eventChild.active == true) {
+            input.setAttribute("checked", "");
         }
-        $('#eventsDiv').html(contentTable + "</tbody></table>"); //Writes the table into the page
 
-        //Gives each Event its own buttons
-        eventsMade.forEach(function (item, index) { //For each event in the array, adding function based on their active status (the eventsState array)
-            var eventsName = item;
+        document.getElementById(eventChild.event + "td").appendChild(div);
+        document.getElementById(eventChild.event + "div").appendChild(input);
+        document.getElementById(eventChild.event + "div").appendChild(label);
 
-            if (eventsState[index] == true) { // Adds a switch to selected event, with correct Active status
-                $("#" + eventsName + "Id").html("<div class='switch small'><input class='switch-input' id='" + eventsName + "Switch' checked type='checkbox'><label class='switch-paddle' for='" + eventsName + "Switch'></div>");
-            } else if (eventsState[index] == false) {
-                $("#" + eventsName + "Id").html("<div class='switch small'><input class='switch-input' id='" + eventsName + "Switch' type='checkbox'><label class='switch-paddle' for='" + eventsName + "Switch'></div>");
+        //Adding Click eventListener to switches
+        var inputId = document.getElementById(eventChild.event + "Switch");
+        inputId.addEventListener("click", function () {
+            if (!inputId.hasAttribute("checked")) {
+                firebase.database().ref('/evenementen/' + eventChild.event).update({ active: true });
+                inputId.setAttribute("checked", "");
             } else {
-                console.log("Couldnt give checkmark");
+                firebase.database().ref('/evenementen/' + eventChild.event).update({ active: false });
+                inputId.removeAttribute("checked", "");
             }
-
-            $("#" + eventsName + "Switch").on("click", function (e) { //Adds click function on the switch element, in order to update active status in database
-                if ($("#" + eventsName + "Switch").prop("checked")) { //Check if switch element has the 'checked' property
-                    firebase.database().ref('/evenementen/' + eventsName).update({ active: true });
-                } else {
-                    firebase.database().ref('/evenementen/' + eventsName).update({ active: false });
-                }
-            });
         });
+    });
+    // On Changed
+    eventsRef.on('child_changed', function (snapshot) {
+        console.log(snapshot.val());
     });
 }
 
