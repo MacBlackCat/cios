@@ -83,6 +83,12 @@ function readEvents() {
     eventsRef.on('child_changed', function (snapshot) {
         console.log(snapshot.val());
     });
+    // On Removed
+    eventsRef.on('child_removed', function (childRemovedData) {
+        var childData = childRemovedData.val();
+        var removeRow = document.getElementById(childData.event + "tr");
+        removeRow.parentNode.removeChild(removeRow);
+    });
 }
 
 function writeNewEvent(eveAme) {
