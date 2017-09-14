@@ -1,5 +1,5 @@
 ﻿// Loads requested page into the content Div in index page. 
-function loadPage(page) {
+function loadPage(page, eventKey) {
     /** TODO
     *   - Change 'beheer' pages titles, now it uses the "page" var as title.
     *   - Add blockade to ensure only admin ranked users can access 'beheer' pages.
@@ -24,13 +24,14 @@ function loadPage(page) {
 }*/
 
 // Loads every event in database in the admin event menu, plus control buttons
-function readEvents() {
+function readEvents(adminVal) {
     var eventsRef = firebase.database().ref('/evenementen/');
     
     //Children functions
     // On Added
     eventsRef.on('child_added', function (snapshot) {
         var eventChild = snapshot.val(); //database data
+
         var tr = document.createElement("tr");
         var td1 = document.createElement("td");
         var td2 = document.createElement("td");
@@ -38,50 +39,57 @@ function readEvents() {
         var hh = document.createElement("h4");
 
         hh.textContent = eventChild.event;
-        td1.id = eventChild.event + "tdhh";
-        td2.id = eventChild.event + "td";
-        tr.id = eventChild.event + "tr";
+        td1.id = eventChild.key + "tdhh";
+        td2.id = eventChild.key + "td";
+        tr.id = eventChild.key + "tr";
 
         document.getElementById("eventsTable").appendChild(tr);
-        document.getElementById(eventChild.event + "tr").appendChild(td1);
-        document.getElementById(eventChild.event + "tdhh").appendChild(hh);
-        document.getElementById(eventChild.event + "tr").appendChild(td2);
+        document.getElementById(eventChild.key + "tr").appendChild(td1);
+        document.getElementById(eventChild.key + "tdhh").appendChild(hh);
+        document.getElementById(eventChild.key + "tr").appendChild(td2);
 
-        var div = document.createElement("div");
-        var input = document.createElement("input");
-        var label = document.createElement("label");
+        if (adminVal == "beheer") {
+            var div = document.createElement("div");
+            var input = document.createElement("input");
+            var label = document.createElement("label");
 
-        div.setAttribute("class", "switch small");
-        div.setAttribute("id", eventChild.event + "div");
-        input.setAttribute("class", "switch-input");
-        input.setAttribute("id", eventChild.event + "Switch");
-        input.setAttribute("type", "checkbox");
-        label.setAttribute("class", "switch-paddle");
-        label.setAttribute("for", eventChild.event + "Switch");
+            div.setAttribute("class", "switch small");
+            div.setAttribute("id", eventChild.key + "div");
+            input.setAttribute("class", "switch-input");
+            input.setAttribute("id", eventChild.key + "Switch");
+            input.setAttribute("type", "checkbox");
+            label.setAttribute("class", "switch-paddle");
+            label.setAttribute("for", eventChild.key + "Switch");
 
-        if (eventChild.active == true) {
-            input.setAttribute("checked", "");
-        }
-
-        document.getElementById(eventChild.event + "td").appendChild(div);
-        document.getElementById(eventChild.event + "div").appendChild(input);
-        document.getElementById(eventChild.event + "div").appendChild(label);
-
-        //Adding Click eventListener to switches
-        var inputId = document.getElementById(eventChild.event + "Switch");
-        inputId.addEventListener("click", function () {
-            if (!inputId.hasAttribute("checked")) {
-                firebase.database().ref('/evenementen/' + eventChild.event).update({ active: true });
-                inputId.setAttribute("checked", "");
-            } else {
-                firebase.database().ref('/evenementen/' + eventChild.event).update({ active: false });
-                inputId.removeAttribute("checked", "");
+            if (eventChild.active == true) {
+                input.setAttribute("checked", "");
             }
-        });
+
+            document.getElementById(eventChild.key + "td").appendChild(div);
+            document.getElementById(eventChild.key + "div").appendChild(input);
+            document.getElementById(eventChild.key + "div").appendChild(label);
+
+            //Adding Click eventListener to switches
+            var inputId = document.getElementById(eventChild.key + "Switch");
+            inputId.addEventListener("click", function () {
+                if (!inputId.hasAttribute("checked")) {
+                    firebase.database().ref('/evenementen/' + eventChild.key).update({ active: true });
+                    inputId.setAttribute("checked", "");
+                } else {
+                    firebase.database().ref('/evenementen/' + eventChild.key).update({ active: false });
+                    inputId.removeAttribute("checked", "");
+                }
+            });
+        } else if (adminVal == "home") {
+            var selectEv = document.getElementById(eventChild.key + "tr");
+            selectEv.addEventListener("click", function () {
+                loadPage("Evenement", eventChild.key);
+            });
+        }
     });
     // On Changed
     eventsRef.on('child_changed', function (snapshot) {
-        console.log(snapshot.val());
+        console.log("Child Changed:" + snapshot.val());
     });
     // On Removed
     eventsRef.on('child_removed', function (childRemovedData) {
@@ -94,15 +102,18 @@ function readEvents() {
 function writeNewEvent(eveAme) {
     var name = $("#" + eveAme).val();
     if (typeof name == "string") {
-        firebase.database().ref('/evenementen/' + name).set({
+        var pushy = firebase.database().ref('/evenementen/').push();        
+        var newPushy = {
             event: name,
-            active: false //Update to make it variable *TODO*
-        });
+            active: false, //Update to make it variable *TODO*
+            key: pushy.key
+        };
+        pushy.set(newPushy);
     } else {
         console.log("No string present \n" + name);
     }
 }
 
 function onloadPage() {
-
+    loadPage("Evenement");
 }

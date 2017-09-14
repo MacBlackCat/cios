@@ -10,6 +10,7 @@
     function onDeviceReady() {
         // Handle the Cordova pause and resume events
         loadPage("Home");
+        readEvents("home");
 
         //Firebase user listener
         firebase.auth().onAuthStateChanged(function (user) {
