@@ -9,8 +9,11 @@
 
     function onDeviceReady() {
         // Handle the Cordova pause and resume events
+        document.getElementById("pageContent").addEventListener("DOMSubtreeModified", function () {
+            firebase.database().ref().off();
+            console.log("Shit's turned off yo!");
+        });
         loadPage("Home");
-        readEvents("home");
 
         //Firebase user listener
         firebase.auth().onAuthStateChanged(function (user) {
