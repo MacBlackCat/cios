@@ -1,5 +1,12 @@
 ﻿// Loads requested page into the content Div in index page. 
 function loadPage(page, eKey) {
+
+    //EventListeners removal
+    for (var eLis in window.globalEventArray) {
+        var refere = window.globalEventArray[eLis];
+        refere.off();
+    }
+
     /** TODO
     *   - Add blockade to ensure only admin ranked users can access 'beheer' pages.
     */
@@ -23,6 +30,7 @@ function loadPage(page, eKey) {
                 console.log(eventName)
                 $("#top-title").text(eventName.event);
             });
+            window.globalEventArray.push(eventsRef);
         }
 
         //If page is the homepage aka displaying all active events
@@ -50,6 +58,7 @@ function loadPage(page, eKey) {
 // Loads every event in database in the admin event menu, plus control buttons
 function readEvents(adminVal) {
     var eventsRef = firebase.database().ref('/evenementen/');
+    window.globalEventArray.push(eventsRef);
     
     //Children functions
     // On Added
