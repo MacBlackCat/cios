@@ -19,6 +19,10 @@ function loadPage(page, eKey) {
             if (page.includes("Evenementen")) {
                 readEvents("beheer");
             }
+
+            if (page.includes("Algemene")) {
+                whichEvent();
+            }
         }
 
         //If page is a requested event
@@ -145,6 +149,7 @@ function writeNewEvent(eveAme) {
         var newPushy = {
             event: name,
             active: false, //Update to make it variable *TODO*
+            info: "Geen info aanwezig",
             key: pushy.key
         };
         pushy.set(newPushy);
@@ -153,6 +158,35 @@ function writeNewEvent(eveAme) {
     }
 }
 
-function onloadPage() {
-    
+//For info page, which event to change and which info
+function whichEvent() {
+    var eRef = firebase.database().ref('/evenementen/');
+    window.globalEventArray.push(eRef);
+
+    //add events to select
+    eRef.on("child_added", function (snapshot) {
+        var optionE = document.createElement("option");
+        var textE = document.createElement("h5");
+        var eventObj = snapshot.val();
+
+        optionE.setAttribute("value", eventObj.key);
+        optionE.setAttribute("id", eventObj.key);
+        textE.textContent = eventObj.event;
+
+        document.getElementById("eventSelectid").appendChild(optionE);
+        document.getElementById(eventObj.key).appendChild(textE);
+
+        document.getElementById(eventObj.key).addEventListener("change", function () {
+            document.getElementById("areaInfo").value = eventObj.info;
+        })
+
+
+    });
+}
+
+function writeA() {
+    var infoVar = document.getElementById("areaInfo").value;
+    var eventN = document.getElementById("eventSelectid").value;
+
+    firebase.database().ref("/evenementen/" + eventN).update({ info: infoVar });
 }
