@@ -169,18 +169,24 @@ function whichEvent() {
         var textE = document.createElement("h5");
         var eventObj = snapshot.val();
 
+        //Makes the elements findable with their own keys
         optionE.setAttribute("value", eventObj.key);
         optionE.setAttribute("id", eventObj.key);
         textE.textContent = eventObj.event;
 
+        //Adds the new child to the option list
         document.getElementById("eventSelectid").appendChild(optionE);
         document.getElementById(eventObj.key).appendChild(textE);
+    });
 
-        document.getElementById(eventObj.key).addEventListener("change", function () {
-            document.getElementById("areaInfo").value = eventObj.info;
-        })
+    //EventListener who checks changes to selected value of the option list, and updates the textfield to the selected option
+    document.getElementById("eventSelectid").addEventListener("change", function () {
+        var currentSel = document.getElementById("eventSelectid").value; //get selected option
+        firebase.database().ref('/evenementen/' + currentSel).once("value", function (snapshot) {
+            var dataObj = snapshot.val();
 
-
+            document.getElementById("areaInfo").value = dataObj.info; //updates textfield
+        });
     });
 }
 
