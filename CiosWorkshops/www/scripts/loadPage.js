@@ -10,6 +10,7 @@ function loadPage(page, eKey) {
     /** TODO
     *   - Add blockade to ensure only admin ranked users can access 'beheer' pages.
     */
+    $("#dataDiv").empty();
     $("#dataDiv").load("html/" + page + "page.html", function () {
         //Check if page is from admin menu
         if (page.includes("beheer/")) { 
@@ -22,6 +23,10 @@ function loadPage(page, eKey) {
 
             if (page.includes("Algemene")) {
                 whichEvent();
+            }
+
+            if (page.includes("Workshops")) {
+                writeWorkshop();
             }
         }
 
@@ -48,16 +53,6 @@ function loadPage(page, eKey) {
     
     $(document).foundation();
 }
-
-// TODO: Write function, create workshops
-/*function writeA(data) {
-    var database = firebase.database();
-    var inhoud = $('#' + data).html();
-
-    database.ref('evenementen/iInspire').update({
-        info: inhoud
-    })
-}*/
 
 // Loads every event in database in the admin event menu, plus control buttons
 function readEvents(adminVal) {
@@ -198,8 +193,34 @@ function writeA() {
 }
 
 function writeWorkshop() {
-    // first select which event
+    var eRef = firebase.database().ref('/evenementen/');
+    window.globalEventArray.push(eRef);
+
+    //add events to select
+    eRef.on("child_added", function (snapshot) {
+        var optionE = document.createElement("option");
+        var textE = document.createElement("h5");
+        var eventObj = snapshot.val();
+
+        //Makes the elements findable with their own keys
+        optionE.setAttribute("value", eventObj.key);
+        optionE.setAttribute("id", eventObj.key);
+        textE.textContent = eventObj.event;
+
+        //Adds the new child to the option list
+        document.getElementById("eventSelectid").appendChild(optionE);
+        document.getElementById(eventObj.key).appendChild(textE);
+    });
+
+    // Removes removed event from selection list
+    eRef.on("child_removed", function (snapshot) {
+        var obj = snapshot.val();
+        $("#" + obj.key).remove();
+    });
+
     // second, list all workshops
+    
+
     // ?select edit workshop or new one
     // Form shows with all the data, new one or selected one
     // Save option
