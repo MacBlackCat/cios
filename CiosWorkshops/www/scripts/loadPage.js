@@ -137,6 +137,7 @@ function readEvents(adminVal) {
     });
 }
 
+//Add new event
 function writeNewEvent(eveAme) {
     var name = $("#" + eveAme).val();
     if (typeof name == "string") {
@@ -185,6 +186,7 @@ function whichEvent() {
     });
 }
 
+// Update Info of selected event
 function writeA() {
     var infoVar = document.getElementById("areaInfo").value;
     var eventN = document.getElementById("eventSelectid").value;
@@ -192,6 +194,7 @@ function writeA() {
     firebase.database().ref("/evenementen/" + eventN).update({ info: infoVar });
 }
 
+// Edit/Add new workshop
 function writeWorkshop() {
     var eRef = firebase.database().ref('/evenementen/');
     window.globalEventArray.push(eRef);
