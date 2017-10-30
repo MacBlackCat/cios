@@ -222,7 +222,14 @@ function writeWorkshop() {
     });
 
     // second, list all workshops
-    
+    document.getElementById("eventSelectid").addEventListener("change", function () {
+        var currentSel = document.getElementById("eventSelectid").value; //get selected option
+        firebase.database().ref('/evenementen/' + currentSel).once("value", function (snapshot) {
+            var dataObj = snapshot.val();
+
+            
+        });
+    });
 
     // ?select edit workshop or new one
     // Form shows with all the data, new one or selected one
