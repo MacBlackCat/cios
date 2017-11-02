@@ -26,7 +26,7 @@ function loadPage(page, eKey) {
             }
 
             if (page.includes("Workshops")) {
-                writeWorkshop();
+                ReadWorkshop();
             }
         }
 
@@ -195,7 +195,7 @@ function writeA() {
 }
 
 // Edit/Add new workshop
-function writeWorkshop() {
+function ReadWorkshop() {
     var eRef = firebase.database().ref('/evenementen/');
     window.globalEventArray.push(eRef);
 
@@ -224,14 +224,31 @@ function writeWorkshop() {
     // second, list all workshops
     document.getElementById("eventSelectid").addEventListener("change", function () {
         var currentSel = document.getElementById("eventSelectid").value; //get selected option
-        firebase.database().ref('/evenementen/' + currentSel).once("value", function (snapshot) {
+        firebase.database().ref('/evenementen/' + currentSel + '/workshops').once("value", function (snapshot) {
             var dataObj = snapshot.val();
 
-            
+            console.log(dataObj);
         });
     });
+}
 
-    // ?select edit workshop or new one
-    // Form shows with all the data, new one or selected one
-    // Save option
+function WriteWorkshop() {
+    var WSname = document.getElementById("workshopList").value;
+    var WStime = document.getElementById("timeId").value;
+    var WSlocation = document.getElementById("locationId").value;
+    var WStext = document.getElementById("textareaId").value;
+    var EVkey = document.getElementById("eventSelectid").value;
+
+    if (typeof WSname == "string") {
+        var pushy = firebase.database().ref('/workshops/').push();
+        var newpushy = {
+            wsname: WSname,
+            time: WStime,
+            location: WSlocation,
+            text: WStext,
+            eventKey: EVkey,
+            key: pushy.key
+        };
+        pushy.set(newpushy);
+    }
 }
