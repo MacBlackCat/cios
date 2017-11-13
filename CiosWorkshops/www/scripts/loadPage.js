@@ -231,6 +231,7 @@ function writeWorkshop() {
         });
     });
 
+
     // ?select edit workshop or new one
     // Form shows with all the data, new one or selected one
     // Save option
