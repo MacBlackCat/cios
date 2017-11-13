@@ -1,6 +1,42 @@
-﻿<select name="eventSelected" id="eventSelectid">
-    <option selected></option>
-</select>
-<input type="text" list="workshopsOpt" /> <!-- Choose which workshop or make one -->
-<datalist id="workshopsOpt"></datalist><!-- Adds all options to input list-->
+﻿<div class="callout">
+    <select name="eventSelected" id="eventSelectid">
+        <option selected>Kies een evenement:</option>
+    </select>
+    <input type="text" list="workshopsOpt" id="workshopList" placeholder="Kies bestaande of maak nieuwe WS"/> <!-- Choose which workshop or make one -->
+    <datalist id="workshopsOpt"></datalist><!-- Adds all options to input list-->
+</div>
 
+<table>
+    <tbody>
+        <tr> <!-- Set location of workshop -->
+            <td>
+                <label>Locatie</label>
+            </td>
+            <td>
+                <input type="text" id="locationId"/>
+            </td>
+        </tr>
+        <tr> <!-- Set time for workshop -->
+            <td>
+                <label>Tijd</label>
+            </td>
+            <td>
+                <input type="time" id="timeId"/>
+            </td>
+        </tr>
+        <tr>
+            <!-- Add Staff as owner/leader of workshop -->
+        </tr>
+        <tr>
+            <!-- Show enlisted users, plus options to remove them -->
+        </tr>
+        <tr>
+            <!-- Option to add background image -->
+        </tr>
+    </tbody>
+</table>
+
+<label>Meer info</label>
+<textarea id="textareaId" rows="10"></textarea>
+
+<input type="submit" class="button" value="Submit" onclick="WriteWorkshop()"/>
