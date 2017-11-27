@@ -13,6 +13,8 @@
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <script src="https://www.gstatic.com/firebasejs/ui/2.5.1/firebase-ui-auth__nl.js"></script>
+        <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/2.5.1/firebase-ui-auth.css" />
         <link rel="stylesheet" type="text/css" href="css/index.css">
         <link rel="stylesheet" href="css/css/foundation.css">
         <link rel="stylesheet" href="css/css/app.css">
@@ -25,7 +27,7 @@
                 <li><a class="small button" href="#" onclick="loadPage('Home')" data-close>Overzicht</a></li>
                 <li><a class="small button" href="#" onclick="loadPage('Planning')" data-close>Planning</a></li>
                 <li><a class="small button" href="#" onclick="loadPage('Contact')" data-close>Contact</a></li>
-                <li><a class="small alert button" href="#" onclick="" data-close>Uitloggen</a></li>
+                <li><a class="small alert button" href="#" onclick="logoutFB()" data-close>Uitloggen</a></li>
                 <li><a class="small secondary button" href="#" onclick="loadPage('Beheer')" data-close>Beheer</a></li>
             </ul>
         </div>
@@ -52,21 +54,23 @@
             <!-- Einde top-balk -->
 
             <div id="pageContent">
+                <div id="firebaseui-auth-container"></div>
                 <!-- Main content div-->
-                <div id="dataDiv"></div>
+                <div id="dataDiv">
+                </div>
                 <!--                 -->
-                <!-- Footer --><!--
+                <!-- Footer -->
                 <div id="footer">
-                    <div class="rounded-social-buttons">
+                    <!--<div class="rounded-social-buttons">
                         <a class="social-button facebook" href="#"></a>
                         <a class="social-button twitter" href="#"></a>
                         <a class="social-button youtube" href="#"></a>
                         <a class="social-button instagram" href="#"></a>
                         <a class="social-button pinterest" href="#"></a>
                         <a class="social-button tumblr" href="#"></a>
-                    </div>
+                    </div>-->
                 </div>
-                <!--        -->
+
             </div>
         </div>
         
@@ -93,6 +97,6 @@
         <script type="text/javascript" src="scripts/js/vendor/foundation.js"></script>
         <script type="text/javascript" src="scripts/index.js"></script>
         <script type="text/javascript" src="scripts/loadPage.js"></script>
-        <script src="scripts/js/JanGGD.js"></script>
+        <script type="text/javascript" src="scripts/users.js"></script>
     </body>
 </html>

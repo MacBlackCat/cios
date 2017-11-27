@@ -10,7 +10,7 @@
     function onDeviceReady() {
         // Handle the Cordova pause and resume events
         window.globalEventArray = [];
-        loadPage("Home");
+        //loadPage("Login");
 
         //Firebase user listener
         firebase.auth().onAuthStateChanged(function (user) {
@@ -24,8 +24,16 @@
                 var uid = user.uid;
                 var providerData = user.providerData;
                 // ...
+                loadPage("Home");
+
+
+                console.log(displayName);
+                console.log(uid);
+                console.log(providerData);
             } else {
                 // User is signed out.
+                loadPage("Login");
+
                 // ...
             }
         });

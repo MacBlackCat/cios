@@ -42,6 +42,12 @@ function loadPage(page, eKey) {
             window.globalEventArray.push(eventsRef);
         }
 
+        //If page is the login page
+        else if (page == "Login") {
+            $("#top-title").text(page);
+            fireLogin();
+        }
+
         //If page is the homepage aka displaying all active events
         else if (page == "Home") {
             $("#top-title").text(page);
@@ -224,15 +230,26 @@ function ReadWorkshop() {
     // second, list all workshops
     document.getElementById("eventSelectid").addEventListener("change", function () {
         var currentSel = document.getElementById("eventSelectid").value; //get selected option
-        firebase.database().ref('/evenementen/' + currentSel + '/workshops').once("value", function (snapshot) {
-            var dataObj = snapshot.val();
+        var aRef = firebase.database().ref('/workshops/' + currentSel);
+        window.globalEventArray.push(aRef);
 
-            console.log(dataObj);
+        aRef.on("child_added", function (snapshot) {
+            var workObj = snapshot.val();
+            var dataListId = document.getElementById("workshopsOpt");
+            var dataOption = document.createElement("OPTION");
+
+            dataOption.setAttribute("value", workObj.wsname);
+            dataOption.setAttribute("id", workObj.key);
+
+            dataListId.appendChild(dataOption);
         });
+
+
     });
 }
 
 function WriteWorkshop() {
+    var EVname = document.getElementById("eventSelectid").value;
     var WSname = document.getElementById("workshopList").value;
     var WStime = document.getElementById("timeId").value;
     var WSlocation = document.getElementById("locationId").value;
@@ -240,7 +257,7 @@ function WriteWorkshop() {
     var EVkey = document.getElementById("eventSelectid").value;
 
     if (typeof WSname == "string") {
-        var pushy = firebase.database().ref('/workshops/').push();
+        var pushy = firebase.database().ref('/workshops/' + EVname).push();
         var newpushy = {
             wsname: WSname,
             time: WStime,
